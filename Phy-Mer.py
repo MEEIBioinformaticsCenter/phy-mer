@@ -67,7 +67,7 @@ def bam_to_rec(in_file):
 #### MAIN
 def main():
 	if len(sys.argv)!=3:
-		print "ERROR: Usage: "+str(sys.argv[0])+" RESULT_DB INPUT_FASTA.fasta"
+		print "ERROR: Usage: "+str(sys.argv[0])+" DataBase.txt INPUT_FASTA.fasta"
 		exit(1)
 
 	min_kmer_repeats=1
