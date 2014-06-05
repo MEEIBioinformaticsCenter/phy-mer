@@ -1,31 +1,20 @@
 #!/usr/bin/env python
 
 import sys
-#import getopt
-#import commands
-#import string
 from Bio import SeqIO
 from operator import itemgetter
-#from operator import attrgetter
 import ast
-
-
 import os
 import pysam
 from Bio import SeqIO, Seq, SeqRecord
 
 
-
-
 #### FUNCTIONS
 
+# Converting a fasta sequence (string) to a dictionary (hash table) of k-mers
 def convert_to_k_mer_hash(array_seq,min_repeats=1):
 	global K_MER_SIZE
 	return_k_mer={}
-	#print "Starting with "+haplogroup_name
-	#array_seq=reconstruct_array_seq(haplogroup_fasta[haplogroup_name])
-	#print array_seq[0:15]
-	#array_seq
 	for seq in array_seq:
 		count_base=0
 		while count_base<= len(seq)-K_MER_SIZE:
@@ -45,11 +34,9 @@ def convert_to_k_mer_hash(array_seq,min_repeats=1):
 			return_k_mer_2[i]=True
 	return return_k_mer_2
 
+# Reading variables from file hash (by lines)'s line
 def read_var_from_file_line(file_name,line):
 	global REF_INDEX_ARRAY
-	#return ast.literal_eval(linecache.getline(DB_FILE,db_line))
-	#return ast.literal_eval(file_name[line-1])
-	#return eval(file_name[line-1])
 	to_return=[]
 	numbers_array=file_name[line-1].split(', ')
 	for i in numbers_array:
@@ -57,8 +44,8 @@ def read_var_from_file_line(file_name,line):
 	return to_return
 	
 
+# Generator to convert BAM files into Biopython SeqRecords.
 def bam_to_rec(in_file):
-	#"""Generator to convert BAM files into Biopython SeqRecords."""
 	MT_names=['M','MT','chrM','chrMT','chrMt','Mt','ChrM','ChrMT','ChrMt','CHRM','CHRMT','CHRMt']
 	bam_file = pysam.Samfile(in_file, "rb")
 	while not('region' in locals()):
@@ -69,29 +56,22 @@ def bam_to_rec(in_file):
 			if len(MT_names)==0:
 				print "ERROR: MtDNA not found in your bam file: ['M','MT','chrM','chrMT','chrMt','Mt','ChrM','ChrMT','ChrMt','CHRM','CHRMT','CHRMt']"
 				exit(1)
-	
 			pass
-	#print region
-	#for read in bam_file:
 	for read in region:
-		
-		#print read
 		seq = Seq.Seq(read.seq)
 		if read.is_reverse:
 			seq = seq.reverse_complement()
 		rec = SeqRecord.SeqRecord(seq, read.qname, "", "")
 		yield rec
 
-
-
 #### MAIN
+def main():
+	if len(sys.argv)!=3:
+		print "ERROR: Usage: "+str(sys.argv[0])+" RESULT_DB INPUT_FASTA.fasta"
+		exit(1)
 
-if len(sys.argv)==3:
 	min_kmer_repeats=1
-	try:
-		FASTA_FILE=sys.argv[2]
-	except IndexError:
-		FASTA_FILE="--interactive--"
+	FASTA_FILE=sys.argv[2]
 	DB_FILE=sys.argv[1]
 	
 	print "Openning DB and Checking k-mer size..."	
@@ -103,12 +83,9 @@ if len(sys.argv)==3:
 	
 	REF_INDEX_ARRAY=ast.literal_eval(TEST_content[2])
 		
-	#k_mer_hash=ast.literal_eval(linecache.getline(DB_FILE,1))
 	k_mer_hash=ast.literal_eval(TEST_content[0])
 	K_MER_SIZE=len(k_mer_hash.keys()[1])
 	print "K-mer="+str(K_MER_SIZE)
-	#k_mer_hash=convert_all_hash_to_number_hash(k_mer_hash)
-	
 	
 	total_hits=0
 	result_haplogroup_ranking={}
@@ -138,50 +115,24 @@ if len(sys.argv)==3:
 	except IndexError:
 		min_kmer_repeats=10
 		array_seq=[]
-		#from Bio import AlignIO
-		#from Bio.Align import AlignInfo
-		#from Bio.Alphabet import IUPAC, Gapped
-		#alphabet = Gapped(IUPAC.ambiguous_dna)
 		print "Seems that is not a FASTA/FASTQ file... Trying with BAM..."
-		#alignment = AlignIO.read(open(FASTA_FILE), "")
-		#count = SeqIO.convert(FASTA_FILE, "bam", FASTA_FILE+".fasta" , "fasta")
-		#print "Converted %i records" % count
-		#print alignment
-		#out_file = "%s.fa" % os.path.splitext(FASTA_FILE)[0]
-		#with open(out_file, "w") as out_handle:
-			# Write records from the BAM file one at a time to the output file.
-			# Works lazily as BAM sequences are read so will handle large files.
-			#SeqIO.write(bam_to_rec(FASTA_FILE), out_handle, "fasta")	
 		for i in bam_to_rec(FASTA_FILE):
-			#print "\n\n\n---"
-			#print i.seq
 			array_seq.append(str(i.seq))
-			
-		#alignment = AlignIO.read(open(out_file), "fasta")
-		#summary_align = AlignInfo.SummaryInfo(alignment)
-		#consensus = summary_align.gap_consensus(threshold = 1.0, ambiguous = 'N', consensus_alpha = alphabet, require_multiple = 2)
-		#print consensus	
-		#print len(consensus)
-		#exit(1)	
 		pass	
 		
 	if len(array_seq)==0:
 		print "ERROR: empty input"
 		exit(1)
 
-	FASTA_FILE="--interactive--"
 	print "Creating k-mer in memory (K="+str(K_MER_SIZE)+")..."
 	input_fasta_k_mer=convert_to_k_mer_hash(array_seq,min_kmer_repeats)
 	print str(len(input_fasta_k_mer))+" K-mers as input"
-	#print input_fasta_k_mer
 	print "Comparing input with DB..."
 	total_hits=0
 	
 	for input_k_mer in input_fasta_k_mer.keys():
 		try:
-			#print input_k_mer
 			db_line=k_mer_hash[input_k_mer]
-			#aux_array_ref=read_var_from_file_line(DB_FILE,db_line)
 			aux_array_ref=read_var_from_file_line(TEST_content,db_line)
 			for aux_ref in aux_array_ref:
 				try:
@@ -193,10 +144,8 @@ if len(sys.argv)==3:
 		except KeyError:
 			pass
 	print "Creating score table..."
-	#max_haplogroup_score_table=aux_array_ref=ast.literal_eval(linecache.getline(DB_FILE,2))
         max_haplogroup_score_table=ast.literal_eval(TEST_content[1])
 
-	#print max_haplogroup_score_table
 	ranking_table=[]
 	for haplogroup in result_haplogroup_ranking.keys():
 		ranking_table.append([haplogroup,float(result_haplogroup_ranking[haplogroup])/float(max_haplogroup_score_table[haplogroup]),float(result_haplogroup_ranking[haplogroup])/float(total_hits),((float(result_haplogroup_ranking[haplogroup])/float(max_haplogroup_score_table[haplogroup]))+(float(result_haplogroup_ranking[haplogroup])/float(total_hits)))/2])
@@ -209,7 +158,6 @@ if len(sys.argv)==3:
 		while i<10:  ## we are printing only top scores
 			if score>ranking_table[i][3]:
 				break
-			#print ranking_table[i]
 			if result[0]=='':
 				result=ranking_table[i]
 			else:
@@ -218,10 +166,12 @@ if len(sys.argv)==3:
 			score=ranking_table[i][3]
 			i+=1
 	except IndexError:
-		print "ERROR: no result, check input"
+		print "ERROR: no result, check input file"
 		exit(1)
 	print result
 
-else:
-	print "ERROR: Usage: "+str(sys.argv[0])+" RESULT_DB INPUT_FASTA.fasta"
+##############
+if __name__ == "__main__":
+	main()
+
 
