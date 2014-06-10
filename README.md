@@ -1,3 +1,5 @@
+## Phy-Mer
+
 #### How Phy-Mer works 
 
 Uncompress the DB:
