@@ -20,6 +20,7 @@ Enjoy Phy-Mer:
 ####Tested with:
 * Python 2.7.3
 * Pysam 0.7.4
+* BioPython 1.58
  
 
 

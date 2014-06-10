@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-from Bio import SeqIO
 from operator import itemgetter
 import ast
 import os
