@@ -18,8 +18,8 @@ Enjoy Phy-Mer:
 	Ex: ./build_Phy-Mer_DB.py resources/MtGenome_sequence.fasta resources/Build\ 16\ -\ rCRS-based\ haplogroup\ motifs.csv Custom_PhyloTree_b16.txt
 
 #### Tested with:
-    * Python 2.7.3
-    * Pysam 0.7.4
+	 * Python 2.7.3
+	 * Pysam 0.7.4
  
 
 
