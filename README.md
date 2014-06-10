@@ -1,6 +1,6 @@
-## Phy-Mer
+##Phy-Mer
 
-#### How Phy-Mer works: 
+####How Phy-Mer works: 
 
 Uncompress the DB:
 	
@@ -12,14 +12,14 @@ Enjoy Phy-Mer:
 	*INPUT -> fasta, fastq and bam compatible.
 
 
-#### How to create a Phy-Mer DB:
+####How to create a Phy-Mer DB:
 
 	./build_Phy-Mer_DB.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB
 	Ex: ./build_Phy-Mer_DB.py resources/MtGenome_sequence.fasta resources/Build\ 16\ -\ rCRS-based\ haplogroup\ motifs.csv Custom_PhyloTree_b16.txt
 
-#### Tested with:
-	 * Python 2.7.3
-	 * Pysam 0.7.4
+####Tested with:
+* Python 2.7.3
+* Pysam 0.7.4
  
 
 
