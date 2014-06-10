@@ -17,14 +17,14 @@ DEFAULT_CHANGE_TABLE={'A':'G','G':'A','C':'T','T':'C'}
 #### FUNCTIONS
 
 
-# Arra of DNA characters to fasta (string)
+# Array of DNA characters to fasta (string) format
 def reconstruct_array_seq(array_seq):
 	tmp_string=''
 	for i in array_seq:
 		tmp_string+=i
 	return(list(tmp_string))
 
-# Checking that each haplogroup has at least one k-mer different to all other haplogroups
+# Checking that each haplogroup has at least one k-mer different than all other haplogroups
 def check_k_mer_hash(k_mer_hash):
 	aux_haplogroup_k_mer={}
 	for k_mer in k_mer_hash.keys():
@@ -101,8 +101,6 @@ def convert_to_k_mer_hash(haplogroup_fasta):
 				pass
 			count_base+=1
 	return k_mer_hash
-
-
 
 
 #### MAIN
