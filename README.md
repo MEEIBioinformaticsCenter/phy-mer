@@ -15,6 +15,11 @@ Enjoy Phy-Mer:
 #### How to create a Phy-Mer DB:
 
 	./build_Phy-Mer_DB.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB
-	Ex: ./build_Phy-Mer_DB.py resources/MtGenome_sequence.fasta resources/Build\ 16\ -\ rCRS-based\ haplogroup\ motifs.csv Custom_PhyloTree_b16.txt 
+	Ex: ./build_Phy-Mer_DB.py resources/MtGenome_sequence.fasta resources/Build\ 16\ -\ rCRS-based\ haplogroup\ motifs.csv Custom_PhyloTree_b16.txt
+
+#### Tested with:
+    * Python 2.7.3
+    * Pysam 0.7.4
+ 
 
 
