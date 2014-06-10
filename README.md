@@ -1,6 +1,6 @@
 ## Phy-Mer
 
-#### How Phy-Mer works 
+#### How Phy-Mer works: 
 
 Uncompress the DB:
 	
@@ -12,7 +12,7 @@ Enjoy Phy-Mer:
 	*INPUT -> fasta, fastq and bam compatible.
 
 
-#### How to create a Phy-Mer DB 
+#### How to create a Phy-Mer DB:
 
 	./build_Phy-Mer_DB.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB
 
