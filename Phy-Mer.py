@@ -7,6 +7,9 @@ import os
 import pysam
 from Bio import SeqIO, Seq, SeqRecord
 
+#### GLOBAL VARS:
+K_MER_SIZE=0
+REF_INDEX_ARRAY=''
 
 #### FUNCTIONS
 
@@ -65,6 +68,8 @@ def bam_to_rec(in_file):
 
 #### MAIN
 def main():
+	global REF_INDEX_ARRAY
+	global K_MER_SIZE
 	if len(sys.argv)!=3:
 		print "ERROR: Usage: "+str(sys.argv[0])+" DataBase.txt INPUT_FASTA.fasta"
 		exit(1)
