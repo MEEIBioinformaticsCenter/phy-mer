@@ -23,7 +23,7 @@ Enjoy Phy-Mer:
 * BioPython 1.58
  
 ####Licensing:
-    Phy-Mer.py
+    Phy-Mer
     Copyright (C) 2014  Daniel Navarro-Gomez (Daniel_navarro@meei.harvard.edu)
 
     This program is free software: you can redistribute it and/or modify
