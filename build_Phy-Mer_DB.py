@@ -25,22 +25,23 @@ from operator import eq
 
 
 ##### DEFAULT VARS
-K_MER_SIZE=10
+K_MER_SIZE=12
 k_mer_hash={}
 haplogroup_input={}
 haplogroup_fasta={}
 number_of_haplogroups=0
 DEFAULT_CHANGE_TABLE={'A':'G','G':'A','C':'T','T':'C'}
 
-#### FUNCTIONS
 
+
+#### FUNCTIONS
 
 # Array of DNA characters to fasta (string) format
 def reconstruct_array_seq(array_seq):
 	tmp_string=''
 	for i in array_seq:
 		tmp_string+=i
-	return(list(tmp_string))
+	return(list(tmp_string.replace('N',''))) 
 
 # Checking that each haplogroup has at least one k-mer different than all other haplogroups
 def check_k_mer_hash(k_mer_hash):
@@ -123,6 +124,12 @@ def convert_to_k_mer_hash(haplogroup_fasta):
 
 #### MAIN
 def main():
+	global K_MER_SIZE
+	global k_mer_hash
+	global haplogroup_input
+	global haplogroup_fasta
+	global number_of_haplogroups
+
 	if len(sys.argv)!=4:
 		print "ERROR: Usage: "+str(sys.argv[0])+" REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB"
 		exit(1)
@@ -134,10 +141,11 @@ def main():
 	print "Reading Haplogroup information..."
 	for rline in open(HAPLOGROUP_FILE,'r').readlines():
 		rline_splited=rline.replace('\n','').split(',')
-		haplogroup_input[rline_splited[0]]=[]
-		for variant in rline_splited:
-			if (variant!=rline_splited[0] and variant!=""):
-				haplogroup_input[rline_splited[0]].append(variant)
+		if rline_splited[0]!='Haplogroup':
+			haplogroup_input[rline_splited[0]]=[]
+			for variant in rline_splited:
+				if (variant!=rline_splited[0] and variant!=""):
+					haplogroup_input[rline_splited[0]].append(variant)
 
 	haplogroup_array=haplogroup_input.keys()
 	number_of_haplogroups=len(haplogroup_array)
