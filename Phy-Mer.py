@@ -269,10 +269,10 @@ def main():
 					
 				score=ranking_table[i][3]
 				i+=1
+			print str(FASTA_FILE)+"\t"+str(result)
 		except IndexError:
-			print "ERROR: no result, check input file"
-			exit(1)
-		print str(FASTA_FILE)+"\t"+str(result)
+			print str(FASTA_FILE)+" ERROR: no result, check input file"
+			#exit(1)
 	
 ##############
 if __name__ == "__main__":
