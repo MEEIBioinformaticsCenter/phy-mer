@@ -33,6 +33,7 @@ from Bio import SeqIO, Seq, SeqRecord
 #### GLOBAL VARS:
 K_MER_SIZE=0
 REF_INDEX_ARRAY=''
+PRINT_RANKING=False
 
 IUPAC_ambiguity_dic={}
 IUPAC_ambiguity_dic['U']=['T']
@@ -46,7 +47,7 @@ IUPAC_ambiguity_dic['V']=['A','C','G']
 IUPAC_ambiguity_dic['H']=['A','C','T']
 IUPAC_ambiguity_dic['D']=['A','G','T']
 IUPAC_ambiguity_dic['B']=['C','G','T']
-IUPAC_ambiguity_dic['N']=['A','C','G','T']
+#IUPAC_ambiguity_dic['N']=['A','C','G','T']  ##You should include this one only in case that you do NOT use N to fill up non-sequenced regions.
 
 #### FUNCTIONS
 # convert a string in a array of strings using all posibilities for IUPAC
@@ -146,20 +147,20 @@ def bam_to_rec(in_file):
 
 #### MAIN
 def main():
-
-
 	verbose=False
-	opts, args = getopt.getopt(sys.argv[1:], '', ['verbose'])
+	global PRINT_RANKING
+	opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking'])
 	
 	for o,p in opts:
 		if o in ['--verbose']:
 			verbose=True
-
+		if o in ['--print-ranking']:
+			PRINT_RANKING=True
 
 	global REF_INDEX_ARRAY
 	global K_MER_SIZE
 	if len(args)<2:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 		exit(1)
 
 	min_kmer_repeats=1
@@ -257,19 +258,32 @@ def main():
 	
 		i=0
 		score=0.00
-		result=['',0.00,0.00]
+		result=['',0.00,0.00,0.00]
 		try:
-			while i<10:  ## we are printing only top scores
-				if score>ranking_table[i][3]:
-					break
-				if result[0]=='':
-					result=ranking_table[i]
+			if not PRINT_RANKING:
+				while i<10:  ## we are printing only top scores
+					if score>ranking_table[i][3] :
+						break
+					if result[0]=='':
+						result=ranking_table[i]
+					else:
+						result[0]+=", "+ranking_table[i][0]
+						
+					score=ranking_table[i][3]
+					i+=1
+				if verbose:
+					print str(FASTA_FILE)+"\t"+str(result)
 				else:
-					result[0]+=", "+ranking_table[i][0]
+					print str(FASTA_FILE)+"\t"+str(result[0])+"\t"+str(result[3])
+			else:
+				print str(FASTA_FILE)
+				while i<5:
+					if verbose:
+						print ranking_table[i]
+					else:
+						print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])
+					i+=1
 					
-				score=ranking_table[i][3]
-				i+=1
-			print str(FASTA_FILE)+"\t"+str(result)
 		except IndexError:
 			print str(FASTA_FILE)+" ERROR: no result, check input file"
 			#exit(1)
