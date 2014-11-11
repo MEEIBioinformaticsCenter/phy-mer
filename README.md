@@ -20,11 +20,14 @@ Uncompress the Library:
 	  DataBase.txt               Provided with the package: PhyloTree_b16_k12.txt
 	  INPUT_X                    Fasta, fastq, and bam files.
 
-
 ####How to create a Phy-Mer Library:
 
 	./build_Phy-Mer_Library.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_Library
 	Ex: ./build_Phy-Mer_Library.py MtGenome_sequence.fasta Build_16_-_rCRS-based_haplogroup_motifs.csvv Custom_PhyloTree_b16.txt
+
+####How to create a fasta file from snp data:
+	./convert_MtSNP_to_MtFasta.py REFERENCE_FASTA_FILE.fasta SNP.csv RESULT.fasta
+	Ex: ./convert_MtSNP_to_MtFasta.py MtGenome_sequence.fasta example_snp.csv OUT.fasta
 
 ####Tested with:
 * Python 2.7.3
