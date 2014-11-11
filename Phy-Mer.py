@@ -144,7 +144,21 @@ def bam_to_rec(in_file):
 			seq = seq.reverse_complement()
 		rec = SeqRecord.SeqRecord(seq, read.qname, "", "")
 		yield rec
-## Help function
+
+# Reads a snp_def_file in memory to annotate results
+def read_snp_def_file(csv_file):
+	haplogroup_input={}
+        for rline in open(csv_file,'r').readlines():
+                rline_splited=rline.replace('\n','').split(',')
+                if rline_splited[0]!='Haplogroup':
+                        haplogroup_input[rline_splited[0]]=[]
+                        for variant in rline_splited:
+                                if (variant!=rline_splited[0] and variant!=""):
+                                        haplogroup_input[rline_splited[0]].append(variant)
+	return(haplogroup_input)
+
+
+# Help function
 def print_help():
 	print "Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 	print "Novel mitochondrial genome haplogroup defining algorithm using a k-mer approach."
@@ -152,7 +166,7 @@ def print_help():
 	print "Optinal arguments."
 	print "  --verbose                  Print step by step process."
 	print "  --print-ranking            Print a ranking of best 5 results instead of the best match."
-	print "  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build 16 - rCRS-based haplogroup motifs.csv"
+	print "  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv"
 	print "                             in resources folder) to the result."
 	print ""
 
@@ -160,12 +174,13 @@ def print_help():
 #### MAIN
 def main():
 	verbose=False
+	DEF_SNP=''
 	global PRINT_RANKING
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help'])
+		opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help','def-snps='])
 	except getopt.GetoptError:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
-		print "Use --help for more informtion"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "Use --help for more informtion."
                 exit(1)
 	
 	for o,p in opts:
@@ -173,6 +188,8 @@ def main():
 			verbose=True
 		if o in ['--print-ranking']:
 			PRINT_RANKING=True
+		if o in ['--def-snps']:
+			DEF_SNP=p
 		if o in ['--help']:
 			print_help()
 			exit(0)
@@ -180,10 +197,15 @@ def main():
 	global REF_INDEX_ARRAY
 	global K_MER_SIZE
 	if len(args)<2:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
-		print "Use --help for more informtion"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "Use --help for more informtion."
 		exit(1)
-
+	if verbose and DEF_SNP!='':
+                print "Openning haplogroup defining snps..."
+	if DEF_SNP!='':
+		haplogroup_snp_dict=read_snp_def_file(DEF_SNP)
+	else:
+		haplogroup_snp_dict={}
 	min_kmer_repeats=1
 	FASTA_FILES=args[1:]
 	DB_FILE=args[0]
@@ -282,27 +304,54 @@ def main():
 		result=['',0.00,0.00,0.00]
 		try:
 			if not PRINT_RANKING:
-				while i<10:  ## we are printing only top scores
-					if score>ranking_table[i][3] :
-						break
-					if result[0]=='':
-						result=ranking_table[i]
-					else:
-						result[0]+=", "+ranking_table[i][0]
-						
-					score=ranking_table[i][3]
-					i+=1
+				snps=''
+				try:
+					while i<10:  ## we are printing only top scores
+						if score>ranking_table[i][3] :
+							break
+						if result[0]=='':
+							result=ranking_table[i]
+							snps="\t["+str(haplogroup_snp_dict[ranking_table[i][0]])
+						else:
+							result[0]+=", "+ranking_table[i][0]
+							snps+=', '+str(haplogroup_snp_dict[ranking_table[i][0]])
+							
+						score=ranking_table[i][3]
+						i+=1
+					snps+=']'
+				except KeyError:
+					while i<10:  ## we are printing only top scores
+						if score>ranking_table[i][3] :
+							break
+						if result[0]=='':
+							result=ranking_table[i]
+						else:
+							result[0]+=", "+ranking_table[i][0]
+							
+						score=ranking_table[i][3]
+						i+=1
+					pass
+
 				if verbose:
-					print str(FASTA_FILE)+"\t"+str(result)
+					print str(FASTA_FILE)+"\t"+str(result)+snps
 				else:
-					print str(FASTA_FILE)+"\t"+str(result[0])+"\t"+str(result[3])
+					print str(FASTA_FILE)+"\t"+str(result[0])+"\t"+str(result[3])+snps
+					
 			else:
 				print str(FASTA_FILE)
 				while i<5:
 					if verbose:
-						print ranking_table[i]
+						try:
+							print str(ranking_table[i])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
+						except KeyError:
+							print str(ranking_table[i])
+							pass
 					else:
-						print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])
+						try:
+							print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
+						except KeyError:
+							print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])
+							pass
 					i+=1
 					
 		except IndexError:
