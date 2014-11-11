@@ -2,14 +2,20 @@
 
 ####How Phy-Mer works: 
 
+#####One time step
 Uncompress the DB:
 	
 	gzip -d PhyloTree_b16_k12.txt.gz
 
-Enjoy Phy-Mer:
+#####Usage
+	../Phy-Mer_src/Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]
+	Novel mitochondrial genome haplogroup defining algorithm using a k-mer approach.
 	
-	./Phy-Mer.py PhyloTree_b16_k12.txt INPUT*
-	*INPUT -> fasta, fastq and bam compatible.
+	Optinal arguments.
+	  --verbose                  Print step by step process.
+	  --print-ranking            Print a ranking of best 5 results instead of the best match.
+	  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv
+	                             in resources folder) to the result.
 
 
 ####How to create a Phy-Mer DB:
