@@ -3,13 +3,12 @@
 ####How Phy-Mer works: 
 
 #####One time step
-Uncompress the DB:
+Uncompress the Library:
 	
 	gzip -d PhyloTree_b16_k12.txt.gz
 
 #####Usage
-	../Phy-Mer_src/Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]
-	Novel mitochondrial genome haplogroup defining algorithm using a k-mer approach.
+	./Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]
 	
 	Optinal arguments.
 	  --verbose                  Print step by step process.
@@ -17,8 +16,12 @@ Uncompress the DB:
 	  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv
 	                             in resources folder) to the result.
 
+	Mandatory arguments.
+	  DataBase.txt               Provided with the package: PhyloTree_b16_k12.txt
+	  INPUT_X                    Fasta, fastq, and bam files.
 
-####How to create a Phy-Mer DB:
+
+####How to create a Phy-Mer Library:
 
 	./build_Phy-Mer_DB.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB
 	Ex: ./build_Phy-Mer_DB.py resources/MtGenome_sequence.fasta resources/Build\ 16\ -\ rCRS-based\ haplogroup\ motifs.csv Custom_PhyloTree_b16.txt
