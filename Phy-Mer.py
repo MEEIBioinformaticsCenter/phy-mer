@@ -144,23 +144,44 @@ def bam_to_rec(in_file):
 			seq = seq.reverse_complement()
 		rec = SeqRecord.SeqRecord(seq, read.qname, "", "")
 		yield rec
+## Help function
+def print_help():
+	print "Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+	print "Novel mitochondrial genome haplogroup defining algorithm using a k-mer approach."
+	print ""
+	print "Optinal arguments."
+	print "  --verbose                  Print step by step process."
+	print "  --print-ranking            Print a ranking of best 5 results instead of the best match."
+	print "  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build 16 - rCRS-based haplogroup motifs.csv"
+	print "                             in resources folder) to the result."
+	print ""
+
 
 #### MAIN
 def main():
 	verbose=False
 	global PRINT_RANKING
-	opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking'])
+	try:
+		opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help'])
+	except getopt.GetoptError:
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "Use --help for more informtion"
+                exit(1)
 	
 	for o,p in opts:
 		if o in ['--verbose']:
 			verbose=True
 		if o in ['--print-ranking']:
 			PRINT_RANKING=True
+		if o in ['--help']:
+			print_help()
+			exit(0)
 
 	global REF_INDEX_ARRAY
 	global K_MER_SIZE
 	if len(args)<2:
 		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "Use --help for more informtion"
 		exit(1)
 
 	min_kmer_repeats=1
