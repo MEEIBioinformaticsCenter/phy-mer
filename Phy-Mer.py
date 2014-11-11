@@ -208,11 +208,11 @@ def main():
 		haplogroup_snp_dict={}
 	min_kmer_repeats=1
 	FASTA_FILES=args[1:]
-	DB_FILE=args[0]
+	Library_FILE=args[0]
 	if verbose:	
-		print "Openning DB and Checking k-mer size..."	
+		print "Openning Library and Checking k-mer size..."	
 		print "READING WHOLE FILE IN MEMORY"
-	with open(DB_FILE) as f:
+	with open(Library_FILE) as f:
 		TEST_content = f.readlines()
 	if verbose:
 		print "DONE"
@@ -274,7 +274,7 @@ def main():
 		input_fasta_k_mer=convert_to_k_mer_hash(array_seq,min_kmer_repeats)
 		if verbose:
 			print str(len(input_fasta_k_mer))+" K-mers as input"
-			print "Comparing input with DB..."
+			print "Comparing input with Library..."
 		total_hits=0
 		
 		for input_k_mer in input_fasta_k_mer.keys():

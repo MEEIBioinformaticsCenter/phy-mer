@@ -8,7 +8,7 @@ Uncompress the Library:
 	gzip -d PhyloTree_b16_k12.txt.gz
 
 #####Usage
-	./Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]
+	./Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]
 	
 	Optinal arguments.
 	  --verbose                  Print step by step process.
@@ -23,8 +23,8 @@ Uncompress the Library:
 
 ####How to create a Phy-Mer Library:
 
-	./build_Phy-Mer_DB.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB
-	Ex: ./build_Phy-Mer_DB.py resources/MtGenome_sequence.fasta resources/Build_16_-_rCRS-based_haplogroup_motifs.csvv Custom_PhyloTree_b16.txt
+	./build_Phy-Mer_Library.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_Library
+	Ex: ./build_Phy-Mer_Library.py resources/MtGenome_sequence.fasta resources/Build_16_-_rCRS-based_haplogroup_motifs.csvv Custom_PhyloTree_b16.txt
 
 ####Tested with:
 * Python 2.7.3
