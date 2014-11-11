@@ -24,7 +24,7 @@ Uncompress the Library:
 ####How to create a Phy-Mer Library:
 
 	./build_Phy-Mer_Library.py REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_Library
-	Ex: ./build_Phy-Mer_Library.py resources/MtGenome_sequence.fasta resources/Build_16_-_rCRS-based_haplogroup_motifs.csvv Custom_PhyloTree_b16.txt
+	Ex: ./build_Phy-Mer_Library.py MtGenome_sequence.fasta Build_16_-_rCRS-based_haplogroup_motifs.csvv Custom_PhyloTree_b16.txt
 
 ####Tested with:
 * Python 2.7.3
