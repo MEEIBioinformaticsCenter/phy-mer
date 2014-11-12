@@ -73,7 +73,7 @@ RESULT_Library.txt: The output k-mer library of all haplogroups defined in the B
 ######SYNOPSIS
 	./convert_MtSNP_to_MtFasta.py REFERENCE.fasta SNP.csv RESULT.fasta
 ######DESCRIPTION
-convert_MtSNP_to_MtFasta.py: Python script to create a FASTA formatted mtDNA sequence based on a list of SNPs
+*convert_MtSNP_to_MtFasta.py: Python script to create a FASTA formatted mtDNA sequence based on a list of SNPs
 
 REFERENCE.fasta: mtDNA reference genome sequence upon which the SNPs are based
 
