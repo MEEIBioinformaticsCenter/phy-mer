@@ -73,7 +73,7 @@ This is a one time step.
 	Comparing input with Library...
 	Creating score table...
 	KF899911.fasta   ['I1a1a1', 0.997856951513528, 0.9990612846989406, 0.9984591181062343]
-* See Score secction for more info.
+	* See Score secction for more info.
 
 
 ####4. Utility Tools
