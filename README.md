@@ -4,7 +4,8 @@
 
 #####1.1 Installing dependences:
 
-Pysam -> https://code.google.com/p/pysam/
+Pysam -> https://code.google.com/p/pysam/ 
+
 BioPython -> http://biopython.org/wiki/Download
 
 #####One time step
