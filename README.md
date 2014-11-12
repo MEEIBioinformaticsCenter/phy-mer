@@ -58,7 +58,7 @@ This is a one time step.
 	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt
 
 ######DESCRIPTION
-*build_Phy-Mer_Library.py*: Python program that creates the k-mer library of all haplogroups.
+_build_Phy-Mer_Library.py_: Python program that creates the k-mer library of all haplogroups.
 
 MtDNA_Genome.fasta: Mitochondrial reference genome sequence in FASTA format, e.g. the revised Cambridge Reference Sequence (rCRS).
 
