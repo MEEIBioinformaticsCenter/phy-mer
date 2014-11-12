@@ -87,11 +87,16 @@ Step by step output, see Score secction for more info.
 Top 5 scored results.
 
 #####3.4. Haplogroup defining snps output (*--def-snp=file.csv*)
+	KF899911.fasta   I1a1a1  0.998459118106  [['73', '199', '203', '204', '250', '263', '455.1T', '573.XC', '750', '1438', '1719', '2706', '3447', '3990', '4529T', '4769', '6734', '7028', '8251', '8616T', '8860', '9053', '9947', '10034', '10238', '10398', '10915', '11719', '12501', '12705', '13780', '14766', '15043', '15326', '15547', '15924', '16129', '16172', '16223', '16311', '16391']]
+
+Haplogroup defining snps after the score.
+
+####4. Phy-Mer Scores
 
 
 
-####4. Utility Tools
-#####4.1. Create a K-mer Library:
+####5. Utility Tools
+#####5.1. Create a K-mer Library:
 
 ######SYNOPSIS
 	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt
@@ -108,7 +113,7 @@ Top 5 scored results.
 ######EXAMPLE
 	Ex: ./build_Phy-Mer_Library.py MtGenome_sequence.fasta Build_16_-_rCRS-based_haplogroup_motifs.csv Custom_PhyloTree_b16.txt
 
-####4.2. Create a FASTA file from snp data:
+#####5.2. Create a FASTA file from snp data:
 ######SYNOPSIS
 	./convert_MtSNP_to_MtFasta.py REFERENCE.fasta SNP.csv RESULT.fasta
 ######DESCRIPTION
