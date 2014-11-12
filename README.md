@@ -100,6 +100,7 @@ Then a score is derived as (x/y + x/z)/2.
 
 #####4.2. Verbose Scores
 Folowing previous section, we define verbose scores as:
+
 [ 'SAMPLE.fasta', x/y , x/z , (x/y + x/z)/2 ]
 
 ####5. Utility Tools
