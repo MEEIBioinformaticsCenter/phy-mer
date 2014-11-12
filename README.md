@@ -52,7 +52,28 @@ This is a one time step.
 	  INPUT_X                    One (required) or more input sequence files in FASTA, FASTQ, or BAM format.
 
 ####3. Phy-Mer Output
-#####3.1. Verbose output (*--verbose*)
+#####3.1. Normal output
+
+	KF899911.fasta   I1a1a1  0.998459118106
+
+	KF899911.fasta:              Name of the input file
+	I1a1a1:                      Haplogroup prediction
+	0.998459118106:              Score (See Score secction for more info)
+
+#####3.2. Verbose output (*--verbose*)
+
+	Openning Library and Checking k-mer size...
+	READING WHOLE FILE IN MEMORY
+	DONE
+	K-mer=12
+	Processing KF899911.fasta
+	Openning fasta file and loading it in memory...
+	Creating k-mer in memory (K=12)...
+	16531 K-mers as input
+	Comparing input with Library...
+	Creating score table...
+	KF899911.fasta   ['I1a1a1', 0.997856951513528, 0.9990612846989406, 0.9984591181062343]
+* See Score secction for more info.
 
 
 ####4. Utility Tools

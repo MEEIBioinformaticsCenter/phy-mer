@@ -320,6 +320,8 @@ def main():
 						i+=1
 					snps+=']'
 				except KeyError:
+					score=0.00
+					result=['',0.00,0.00,0.00]
 					while i<10:  ## we are printing only top scores
 						if score>ranking_table[i][3] :
 							break
