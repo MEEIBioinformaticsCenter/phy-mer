@@ -1,6 +1,11 @@
 ##Phy-Mer
 
-####How Phy-Mer works: 
+####1. Installation: 
+
+#####1.1 Installing dependences:
+
+Pysam -> https://code.google.com/p/pysam/
+BioPython -> http://biopython.org/wiki/Download
 
 #####One time step
 Uncompress the Library:
