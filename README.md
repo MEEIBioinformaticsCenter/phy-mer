@@ -58,13 +58,13 @@ This is a one time step.
 	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt
 
 ######DESCRIPTION
-_build_Phy-Mer_Library.py_: Python program that creates the k-mer library of all haplogroups.
+**build_Phy-Mer_Library.py**: Python program that creates the k-mer library of all haplogroups.
 
-MtDNA_Genome.fasta: Mitochondrial reference genome sequence in FASTA format, e.g. the revised Cambridge Reference Sequence (rCRS).
+**MtDNA_Genome.fasta**: Mitochondrial reference genome sequence in FASTA format, e.g. the revised Cambridge Reference Sequence (rCRS).
 
-SNPS_HAPLOGROUPS.csv: The list of haplogroup-defining SNPs based on the mitochondrial reference genome secuence. An example file for PhyloTree Build 16 based in rCRS is provided in the package, named Build_16_-_rCRS-based_haplogroup_motifs.csv.
+**SNPS_HAPLOGROUPS.csv**: The list of haplogroup-defining SNPs based on the mitochondrial reference genome secuence. An example file for PhyloTree Build 16 based in rCRS is provided in the package, named Build_16_-_rCRS-based_haplogroup_motifs.csv.
 
-RESULT_Library.txt: The output k-mer library of all haplogroups defined in the Build_16_-_rCRS-based_haplogroup_motifs.csv file.
+**RESULT_Library.txt**: The output k-mer library of all haplogroups defined in the Build_16_-_rCRS-based_haplogroup_motifs.csv file.
 
 ######EXAMPLE
 	Ex: ./build_Phy-Mer_Library.py MtGenome_sequence.fasta Build_16_-_rCRS-based_haplogroup_motifs.csv Custom_PhyloTree_b16.txt
@@ -73,13 +73,13 @@ RESULT_Library.txt: The output k-mer library of all haplogroups defined in the B
 ######SYNOPSIS
 	./convert_MtSNP_to_MtFasta.py REFERENCE.fasta SNP.csv RESULT.fasta
 ######DESCRIPTION
-convert_MtSNP_to_MtFasta.py: Python script to create a FASTA formatted mtDNA sequence based on a list of SNPs
+**convert_MtSNP_to_MtFasta.py**: Python script to create a FASTA formatted mtDNA sequence based on a list of SNPs
 
-REFERENCE.fasta: mtDNA reference genome sequence upon which the SNPs are based
+**REFERENCE.fasta**: mtDNA reference genome sequence upon which the SNPs are based
 
-SNP.csv: SNP data in comm-delimited format.
+**SNP.csv**: SNP data in comm-delimited format.
 
-RESULT.fasta: Output file to store the FASTA sequence
+**RESULT.fasta**: Output file to store the FASTA sequence
 
 
 ######EXAMPLE
