@@ -93,10 +93,14 @@ Haplogroup defining snps after the score.
 
 ####4. Phy-Mer Scores
 
+#####4.1. Standard score
 Given a mitochondrial sequence as the input, Phy-Mer first decomposes its sequence into a set of all possible 12-mers, which are then compared against each of the 12-mer libraries of all haplogroups. As an example, an input sequence has x 12-mers that matches the 12-mers of haplogroup A, which has a total y 12-mers in its library. The sequence has on the other hand z 12-mers that match 12-mers of all haplogroup libraries. 
 
 Then a score is derived as (x/y + x/z)/2.
 
+#####4.2. Verbose Scores
+Folowing previous section, we define verbose scores as:
+[ 'SAMPLE.fasta', x/y , x/z , (x/y + x/z)/2 ]
 
 ####5. Utility Tools
 #####5.1. Create a K-mer Library:
