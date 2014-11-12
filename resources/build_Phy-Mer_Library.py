@@ -275,7 +275,7 @@ def main():
 				f.write(str(line).replace('[','').replace(']','')+"\n")
 			f.close	
 		else:
-			K_MER_SIZE+=2
+			K_MER_SIZE+=1
 			print "K-mer to small, changing to "+str(K_MER_SIZE)
 			
 
