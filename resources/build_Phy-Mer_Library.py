@@ -130,10 +130,15 @@ def main():
 	global haplogroup_fasta
 	global number_of_haplogroups
 
-	if len(sys.argv)!=4:
-		print "ERROR: Usage: "+str(sys.argv[0])+" REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB"
+	if len(sys.argv)<4 or len(sys.argv)>5:
+		print "ERROR: Usage: "+str(sys.argv[0])+" REFERENCE_FASTA_FILE.fasta SNPS_HAPLOGROUPS.csv RESULT_DB [min_k-mer_size]"
 		exit(1)
 
+	try:
+		K_MER_SIZE=sys.argv[4]
+	except IndexError:
+		pass
+		
 	FASTA_FILE=sys.argv[1]
 	HAPLOGROUP_FILE=sys.argv[2]
 	OUTPUT_FILE=sys.argv[3]

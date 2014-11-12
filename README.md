@@ -107,7 +107,7 @@ Folowing previous section, we define verbose scores as:
 #####5.1. Create a K-mer Library:
 
 ######SYNOPSIS
-	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt
+	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt [min_k-mer_size]
 
 ######DESCRIPTION
 **build_Phy-Mer_Library.py**: Python program that creates the k-mer library of all haplogroups.
@@ -117,6 +117,8 @@ Folowing previous section, we define verbose scores as:
 **SNPS_HAPLOGROUPS.csv**: The list of haplogroup-defining SNPs based on the mitochondrial reference genome secuence. An example file for PhyloTree Build 16 based in rCRS is provided in the package, named Build_16_-_rCRS-based_haplogroup_motifs.csv.
 
 **RESULT_Library.txt**: The output k-mer library of all haplogroups defined in the Build_16_-_rCRS-based_haplogroup_motifs.csv file.
+
+**min_k-mer_size**: OPTIONAL, minimal k-mer size considered for the library
 
 ######EXAMPLE
 	Ex: ./build_Phy-Mer_Library.py MtGenome_sequence.fasta Build_16_-_rCRS-based_haplogroup_motifs.csv Custom_PhyloTree_b16.txt
