@@ -56,9 +56,9 @@ This is a one time step.
 
 	KF899911.fasta   I1a1a1  0.998459118106
  
-	KF899911.fasta:              Name of the input file
-	I1a1a1:                      Haplogroup prediction
-	0.998459118106:              Score (See Score secction for more info)
+**KF899911.fasta**:              Name of the input file
+**I1a1a1**:                      Haplogroup prediction
+**0.998459118106**:              Score (See Score secction for more info)
 
 #####3.2. Verbose output (*--verbose*)
 
@@ -73,7 +73,21 @@ This is a one time step.
 	Comparing input with Library...
 	Creating score table...
 	KF899911.fasta   ['I1a1a1', 0.997856951513528, 0.9990612846989406, 0.9984591181062343]
-	* See Score secction for more info.
+
+Step by step output, see Score secction for more info.
+
+#####3.3. Top 5 results output (*--print-ranking*)
+	KF899911.fasta
+	I1a1a1  0.998459118106
+	I1a1a   0.997688614168
+	I1a1a2  0.996884512927
+	I1a1    0.996884512927
+	I1a1e   0.996080411687
+
+Top 5 scored results.
+
+#####3.4. Haplogroup defining snps output (*--def-snp=file.csv*)
+
 
 
 ####4. Utility Tools
