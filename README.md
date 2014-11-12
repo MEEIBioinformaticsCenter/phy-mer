@@ -40,14 +40,16 @@ This is a one time step.
 #####DESCRIPTION
 	
 	Optinal arguments.
+	  --help                     Show this help.
 	  --verbose                  Print step by step process.
-	  --print-ranking            Print a ranking of best 5 results instead of the best match.
-	  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv
-	                             in resources folder) to the result.
+	  --print-ranking            Print top 5 results instead of the best match.
+	  --def-snp=file.csv         Add Haplogroup defining snps to top matches
+	                             based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv
+	                             in resources folder).
 
 	Mandatory arguments.
-	  DataBase.txt               Provided with the package: PhyloTree_b16_k12.txt
-	  INPUT_X                    Fasta, fastq, and bam files.
+	  Library.txt                Provided with the package: PhyloTree_b16_k12.txt
+	  INPUT_X                    One (required) or more input sequence files in FASTA, FASTQ, or BAM format.
 
 ####3. Utility Tools
 #####3.1. Create a K-mer Library:
