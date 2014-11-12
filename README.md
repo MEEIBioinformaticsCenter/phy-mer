@@ -51,8 +51,12 @@ This is a one time step.
 	  Library.txt                Provided with the package: PhyloTree_b16_k12.txt
 	  INPUT_X                    One (required) or more input sequence files in FASTA, FASTQ, or BAM format.
 
-####3. Utility Tools
-#####3.1. Create a K-mer Library:
+####3. Phy-Mer Output
+#####3.1. Verbose output (*--verbose*)
+
+
+####4. Utility Tools
+#####4.1. Create a K-mer Library:
 
 ######SYNOPSIS
 	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt
@@ -69,7 +73,7 @@ This is a one time step.
 ######EXAMPLE
 	Ex: ./build_Phy-Mer_Library.py MtGenome_sequence.fasta Build_16_-_rCRS-based_haplogroup_motifs.csv Custom_PhyloTree_b16.txt
 
-####3.2. Create a FASTA file from snp data:
+####4.2. Create a FASTA file from snp data:
 ######SYNOPSIS
 	./convert_MtSNP_to_MtFasta.py REFERENCE.fasta SNP.csv RESULT.fasta
 ######DESCRIPTION
