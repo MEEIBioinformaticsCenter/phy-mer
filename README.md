@@ -55,7 +55,7 @@ This is a one time step.
 #####3.1. Normal output
 
 	KF899911.fasta   I1a1a1  0.998459118106
-<br/> 
+ 
 	KF899911.fasta:              Name of the input file
 	I1a1a1:                      Haplogroup prediction
 	0.998459118106:              Score (See Score secction for more info)
