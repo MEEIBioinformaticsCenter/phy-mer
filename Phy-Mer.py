@@ -160,14 +160,16 @@ def read_snp_def_file(csv_file):
 
 # Help function
 def print_help():
-	print "Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+	print "Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 	print "Novel mitochondrial genome haplogroup defining algorithm using a k-mer approach."
 	print ""
 	print "Optinal arguments."
+	print "  --help                     Show this help."
 	print "  --verbose                  Print step by step process."
-	print "  --print-ranking            Print a ranking of best 5 results instead of the best match."
-	print "  --def-snp=file.csv         Add Haplogroup defining snps based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv"
-	print "                             in resources folder) to the result."
+	print "  --print-ranking            Print top 5 results instead of the best match."
+	print "  --def-snp=file.csv         Add Haplogroup defining snps to top matches"
+	print "                             based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv"
+	print "                             in resources folder)."
 	print ""
 
 
