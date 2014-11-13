@@ -63,16 +63,16 @@ Download last version of Phy-Mer and utilities following this link (https://gith
  
 **KF899911.fasta**:              Name of the input file
 **I1a1a1**:                      Haplogroup prediction
-**0.998459118106**:              Score (See Score secction for more info)
+**0.998459118106**:              Score (See Score section for more info)
 
 #####3.2. Verbose output (*--verbose*)
 
-	Openning Library and Checking k-mer size...
+	Opening Library and Checking k-mer size...
 	READING WHOLE FILE IN MEMORY
 	DONE
 	K-mer=12
 	Processing KF899911.fasta
-	Openning fasta file and loading it in memory...
+	Opening fasta file and loading it in memory...
 	Creating k-mer in memory (K=12)...
 	16531 K-mers as input
 	Comparing input with Library...
@@ -101,7 +101,7 @@ Given a mitochondrial sequence as the input, Phy-Mer first decomposes its sequen
 Then a score is derived as (x/y + x/z)/2.
 
 #####4.2. Verbose Scores
-Folowing previous section, we define verbose scores as:
+Following previous section, we define verbose scores as:
 
 [ 'SAMPLE.fasta', x/y , x/z , (x/y + x/z)/2 ]
 
@@ -116,7 +116,7 @@ Folowing previous section, we define verbose scores as:
 
 **MtDNA_Genome.fasta**: Mitochondrial reference genome sequence in FASTA format, e.g. the revised Cambridge Reference Sequence (rCRS).
 
-**SNPS_HAPLOGROUPS.csv**: The list of haplogroup-defining SNPs based on the mitochondrial reference genome secuence. An example file for PhyloTree Build 16 based in rCRS is provided in the package, named Build_16_-_rCRS-based_haplogroup_motifs.csv.
+**SNPS_HAPLOGROUPS.csv**: The list of haplogroup-defining SNPs based on the mitochondrial reference genome sequence. An example file for PhyloTree Build 16 based in rCRS is provided in the package, named Build_16_-_rCRS-based_haplogroup_motifs.csv.
 
 **RESULT_Library.txt**: The output k-mer library of all haplogroups defined in the Build_16_-_rCRS-based_haplogroup_motifs.csv file.
 

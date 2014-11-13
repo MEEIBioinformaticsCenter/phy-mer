@@ -203,7 +203,7 @@ def main():
 		print "Use --help for more informtion."
 		exit(1)
 	if verbose and DEF_SNP!='':
-                print "Openning haplogroup defining snps..."
+                print "Opening haplogroup defining snps..."
 	if DEF_SNP!='':
 		haplogroup_snp_dict=read_snp_def_file(DEF_SNP)
 	else:
@@ -212,7 +212,7 @@ def main():
 	FASTA_FILES=args[1:]
 	Library_FILE=args[0]
 	if verbose:	
-		print "Openning Library and Checking k-mer size..."	
+		print "Opening Library and Checking k-mer size..."	
 		print "READING WHOLE FILE IN MEMORY"
 	with open(Library_FILE) as f:
 		TEST_content = f.readlines()
@@ -235,7 +235,7 @@ def main():
 		result_haplogroup_ranking={}
 	
 		if verbose:		
-			print "Openning fasta file and loading it in memory..."
+			print "Opening fasta file and loading it in memory..."
 		try:
 			handle = open(FASTA_FILE, "rU")
 		except IOError:
