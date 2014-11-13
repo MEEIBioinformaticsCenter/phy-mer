@@ -21,15 +21,20 @@
 
 #####1.1. Installing dependences:
 
-Python (2.7.3 tested) -> https://www.python.org/downloads/
+Download and install the dependencies. Installation instructions for each dependency are provided on its project website with the URL provided.
 
-Pysam (0.7.4 tested) -> https://code.google.com/p/pysam/ 
+- Python (2.7.3 tested) -> https://www.python.org/downloads/
 
-BioPython (1.58 tested) -> http://biopython.org/wiki/Download
+- Pysam (0.7.4 tested) -> https://code.google.com/p/pysam/ 
 
-#####1.2. Uncompress the Library
-This is a one time step.
+- BioPython (1.58 tested) -> http://biopython.org/wiki/Download
+
+#####1.2. Download Phy-Mer package, uncompress it and uncompress the Library:
+Download last version of Phy-Mer and utilities following this link (https://github.com/danielnavarrogomez/phy-mer/archive/master.zip), uncompress it, open "phy-mer-master" folder and uncompress "PhyloTree_b16_k12.txt.gz".
 	
+	wget https://github.com/danielnavarrogomez/phy-mer/archive/master.zip
+	unzip master.zip
+	cd phy-mer-master
 	gzip -d PhyloTree_b16_k12.txt.gz
 
 ####2. Usage
@@ -74,8 +79,6 @@ This is a one time step.
 	Creating score table...
 	KF899911.fasta   ['I1a1a1', 0.997856951513528, 0.9990612846989406, 0.9984591181062343]
 
-Step by step output, see Score secction for more info.
-
 #####3.3. Top 5 results output (*--print-ranking*)
 	KF899911.fasta
 	I1a1a1  0.998459118106
@@ -89,7 +92,6 @@ Top 5 scored results.
 #####3.4. Haplogroup defining snps output (*--def-snp=file.csv*)
 	KF899911.fasta   I1a1a1  0.998459118106  [['73', '199', '203', '204', '250', '263', '455.1T', '573.XC', '750', '1438', '1719', '2706', '3447', '3990', '4529T', '4769', '6734', '7028', '8251', '8616T', '8860', '9053', '9947', '10034', '10238', '10398', '10915', '11719', '12501', '12705', '13780', '14766', '15043', '15326', '15547', '15924', '16129', '16172', '16223', '16311', '16391']]
 
-Haplogroup defining snps after the score.
 
 ####4. Phy-Mer Scores
 
@@ -104,7 +106,7 @@ Folowing previous section, we define verbose scores as:
 [ 'SAMPLE.fasta', x/y , x/z , (x/y + x/z)/2 ]
 
 ####5. Utility Tools
-#####5.1. Create a K-mer Library:
+#####5.1. Create a K-mer library:
 
 ######SYNOPSIS
 	./build_Phy-Mer_Library.py MtDNA_Genome.fasta SNPS_HAPLOGROUPS.csv RESULT_Library.txt [min_k-mer_size]
