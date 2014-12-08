@@ -40,7 +40,8 @@ Download last version of Phy-Mer and utilities following this link (https://gith
 ####2. Usage
 
 #####SYNOPSIS
-	./Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]
+	min_kmer_repeats=1
+	./Phy-Mer.py [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC=10] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]
 
 #####DESCRIPTION
 	
@@ -51,6 +52,9 @@ Download last version of Phy-Mer and utilities following this link (https://gith
 	  --def-snp=file.csv         Add Haplogroup defining snps to top matches
 	                             based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv
 	                             in resources folder).
+	  --min-DoC=10               Only apply to BAM inputs. Minimal number of occurences of a K-mer
+                                     to be consider.
+
 
 	Mandatory arguments.
 	  Library.txt                Provided with the package: PhyloTree_b16_k12.txt
