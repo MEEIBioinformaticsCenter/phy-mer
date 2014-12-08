@@ -34,6 +34,8 @@ from Bio import SeqIO, Seq, SeqRecord
 K_MER_SIZE=0
 REF_INDEX_ARRAY=''
 PRINT_RANKING=False
+min_kmer_repeats_bam=10
+
 
 IUPAC_ambiguity_dic={}
 IUPAC_ambiguity_dic['U']=['T']
@@ -170,6 +172,8 @@ def print_help():
 	print "  --def-snp=file.csv         Add Haplogroup defining snps to top matches"
 	print "                             based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv"
 	print "                             in resources folder)."
+	print "  --min-DoC=10               Only apply to BAM inputs. Minimal number of occurences of a K-mer"
+	print " 			    to be consider."
 	print ""
 
 
@@ -178,14 +182,17 @@ def main():
 	verbose=False
 	DEF_SNP=''
 	global PRINT_RANKING
+	global min_kmer_repeats_bam
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help','def-snps='])
+		opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help','def-snps=','min-DoC='])
 	except getopt.GetoptError:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+min_kmer_repeats_bam+"] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 		print "Use --help for more informtion."
                 exit(1)
 	
 	for o,p in opts:
+		if o in ['--min-DoC']:
+			min_kmer_repeats_bam=int(p)
 		if o in ['--verbose']:
 			verbose=True
 		if o in ['--print-ranking']:
@@ -199,7 +206,7 @@ def main():
 	global REF_INDEX_ARRAY
 	global K_MER_SIZE
 	if len(args)<2:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+min_kmer_repeats_bam+"] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 		print "Use --help for more informtion."
 		exit(1)
 	if verbose and DEF_SNP!='':
@@ -259,7 +266,7 @@ def main():
 					array_seq.append(list(record.seq))
 				handle.close()
 		except IndexError:
-			min_kmer_repeats=10
+			min_kmer_repeats=min_kmer_repeats_bam
 			array_seq=[]
 			if verbose:
 				print "Seems that is not a FASTA/FASTQ file... Trying with BAM..."
@@ -344,6 +351,7 @@ def main():
 			else:
 				print str(FASTA_FILE)
 				while i<5:
+				#while i<len(ranking_table):
 					if verbose:
 						try:
 							print str(ranking_table[i])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
