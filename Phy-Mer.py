@@ -162,7 +162,7 @@ def read_snp_def_file(csv_file):
 
 # Help function
 def print_help():
-	print "Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+	print "Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+str(min_kmer_repeats_bam)+"] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 	print "Novel mitochondrial genome haplogroup defining algorithm using a k-mer approach."
 	print ""
 	print "Optinal arguments."
@@ -186,7 +186,7 @@ def main():
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help','def-snps=','min-DoC='])
 	except getopt.GetoptError:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+min_kmer_repeats_bam+"] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+str(min_kmer_repeats_bam)+"] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 		print "Use --help for more informtion."
                 exit(1)
 	
@@ -206,7 +206,7 @@ def main():
 	global REF_INDEX_ARRAY
 	global K_MER_SIZE
 	if len(args)<2:
-		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+min_kmer_repeats_bam+"] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
+		print "ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+str(min_kmer_repeats_bam)+"] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]"
 		print "Use --help for more informtion."
 		exit(1)
 	if verbose and DEF_SNP!='':
