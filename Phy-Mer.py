@@ -236,44 +236,66 @@ def main():
 	
 	for FASTA_FILE in FASTA_FILES:
 
-		if verbose:	
-			print "Processing "+FASTA_FILE	
-		total_hits=0
-		result_haplogroup_ranking={}
-	
+
 		if verbose:		
-			print "Opening fasta file and loading it in memory..."
+			print "Opening input file and loading it in memory..."
 		try:
 			handle = open(FASTA_FILE, "rU")
 		except IOError:
 			print FASTA_FILE+" doesn't exist..."
 			exit(1)
+
+		if verbose:	
+			print "Processing "+FASTA_FILE	
+		total_hits=0
+		result_haplogroup_ranking={}
 		array_seq=[]
-		try:
-			for record in SeqIO.parse(handle, "fasta") :
-				array_seq.append(list(record.seq))
-			handle.close()
-			if len(array_seq)==0:
-				if verbose:
-					print "Warning, no FASTA Reads, trying with FASTQ..."
-				try:
-					handle = open(FASTA_FILE, "rU")
-				except IOError:
-					print FASTA_FILE+" doesn't exist..."
-					exit(1)	
-				array_seq=[]
-				for record in SeqIO.parse(handle, "fastq") :
+		
+		if FASTA_FILE.split('.')[-1].lower()=="fasta" or FASTA_FILE.split('.')[-1].lower()=="fa": 
+			if verbose:	
+				print "Detected FASTA format"	
+
+			try:
+				for record in SeqIO.parse(handle, "fasta") :
 					array_seq.append(list(record.seq))
 				handle.close()
-		except IndexError:
-			min_kmer_repeats=min_kmer_repeats_bam
+				if len(array_seq)==0:
+					exit(1)
+			except:
+				print "ERROR: reading FASTA file, please check input"
+				exit(1)
+				
+		elif FASTA_FILE.split('.')[-1].lower()=="fastq": 
+			if verbose:	
+				print "Detected FASTQ format"	
+			try:
+				handle = open(FASTA_FILE, "rU")
+			except IOError:
+				print FASTA_FILE+" doesn't exist..."
+				exit(1)	
 			array_seq=[]
-			if verbose:
-				print "Seems that is not a FASTA/FASTQ file... Trying with BAM..."
-			for i in bam_to_rec(FASTA_FILE):
-				array_seq.append(str(i.seq))
-			pass	
-			
+			for record in SeqIO.parse(handle, "fastq") :
+				array_seq.append(list(record.seq))
+			handle.close()
+
+
+		elif FASTA_FILE.split('.')[-1].lower()=="bam": 
+			if verbose:	
+				print "Detected BAM format"	
+			try:
+				min_kmer_repeats=min_kmer_repeats_bam
+				array_seq=[]
+				for i in bam_to_rec(FASTA_FILE):
+					array_seq.append(str(i.seq))
+			except:
+				print "ERROR: reading BAM file, please check input"
+				exit(1)
+		
+		else: 
+			print "ERROR: Input file not compatible: fasta, fastq or bam"
+			exit(1)
+
+		
 		if len(array_seq)==0:
 			print "ERROR: empty input"
 			exit(1)
