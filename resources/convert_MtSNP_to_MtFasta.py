@@ -134,7 +134,8 @@ def main():
 	f.write(">gi|fasta_from:"+SNP_FILE+"\n")
 	chunk_size=70
 	result_seq=reconstruct_array_seq(array_result_seq)
-	chunk_size
+	#chunk_size
+	i=0
 	while i<len(result_seq):
 		f.write(result_seq[i:i+chunk_size]+"\n")
 		i+=chunk_size
