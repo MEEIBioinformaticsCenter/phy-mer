@@ -247,17 +247,17 @@ def main():
 
 		if verbose:	
 			print "Processing "+FASTA_FILE	
-		total_hits=0
-		result_haplogroup_ranking={}
 		array_seq=[]
-		
-		if FASTA_FILE.split('.')[-1].lower()=="fasta" or FASTA_FILE.split('.')[-1].lower()=="fa": 
+		array_sample=[]
+		IS_FASTA_INPUT=False
+		if FASTA_FILE.split('.')[-1].lower()=="fasta" or FASTA_FILE.split('.')[-1].lower()=="fa" or FASTA_FILE.split('.')[-1].lower()=="txt": 
+			IS_FASTA_INPUT=True
 			if verbose:	
 				print "Detected FASTA format"	
-
 			try:
 				for record in SeqIO.parse(handle, "fasta") :
-					array_seq.append(list(record.seq))
+					array_sample.append(record.id)
+					array_seq.append(list(record.seq.upper()))
 				handle.close()
 				if len(array_seq)==0:
 					exit(1)
@@ -292,7 +292,7 @@ def main():
 				exit(1)
 		
 		else: 
-			print "ERROR: Input file not compatible: fasta, fastq or bam"
+			print "ERROR: Input file not compatible: fasta (fasta, fa or txt), fastq or bam"
 			exit(1)
 
 		
@@ -300,98 +300,124 @@ def main():
 			print "ERROR: empty input"
 			exit(1)
 		
-		if verbose:
-			print "Creating k-mer in memory (K="+str(K_MER_SIZE)+")..."
-		input_fasta_k_mer=convert_to_k_mer_hash(array_seq,min_kmer_repeats)
-		if verbose:
-			print str(len(input_fasta_k_mer))+" K-mers as input"
-			print "Comparing input with Library..."
-		total_hits=0
-		
-		for input_k_mer in input_fasta_k_mer.keys():
-			try:
-				db_line=k_mer_hash[input_k_mer]
-				aux_array_ref=read_var_from_file_line(TEST_content,db_line)
-				for aux_ref in aux_array_ref:
-					try:
-						result_haplogroup_ranking[aux_ref]+=1
-					except KeyError:
-						result_haplogroup_ranking[aux_ref]=1
-						pass
-				total_hits+=1
-			except KeyError:
-				pass
-		if verbose:
-			print "Creating score table..."
-	        max_haplogroup_score_table=ast.literal_eval(TEST_content[1])
-	
-		ranking_table=[]
-		for haplogroup in result_haplogroup_ranking.keys():
-			ranking_table.append([haplogroup,float(result_haplogroup_ranking[haplogroup])/float(max_haplogroup_score_table[haplogroup]),float(result_haplogroup_ranking[haplogroup])/float(total_hits),((float(result_haplogroup_ranking[haplogroup])/float(max_haplogroup_score_table[haplogroup]))+(float(result_haplogroup_ranking[haplogroup])/float(total_hits)))/2])
-		ranking_table.sort(key=itemgetter(3),reverse=True)
-	
-		i=0
-		score=0.00
-		result=['',0.00,0.00,0.00]
-		try:
-			if not PRINT_RANKING:
-				snps=''
+		#print array_seq
+		#exit(0)
+		if IS_FASTA_INPUT:
+			samples_seq=array_seq
+		else:
+			samples_seq=['a']
+		while len(samples_seq)>0:
+			total_hits=0
+			result_haplogroup_ranking={}
+			if IS_FASTA_INPUT:
+				array_seq=[samples_seq[0]]
+			if verbose:
+				print "Creating k-mer in memory (K="+str(K_MER_SIZE)+")..."
+			input_fasta_k_mer=convert_to_k_mer_hash(array_seq,min_kmer_repeats)
+			if verbose:
+				print str(len(input_fasta_k_mer))+" K-mers as input"
+				print "Comparing input with Library..."
+			total_hits=0
+			
+			for input_k_mer in input_fasta_k_mer.keys():
 				try:
-					while i<10:  ## we are printing only top scores
-						if score>ranking_table[i][3] :
-							break
-						if result[0]=='':
-							result=ranking_table[i]
-							snps="\t["+str(haplogroup_snp_dict[ranking_table[i][0]])
-						else:
-							result[0]+=", "+ranking_table[i][0]
-							snps+=', '+str(haplogroup_snp_dict[ranking_table[i][0]])
-							
-						score=ranking_table[i][3]
-						i+=1
-					snps+=']'
+					db_line=k_mer_hash[input_k_mer]
+					aux_array_ref=read_var_from_file_line(TEST_content,db_line)
+					for aux_ref in aux_array_ref:
+						try:
+							result_haplogroup_ranking[aux_ref]+=1
+						except KeyError:
+							result_haplogroup_ranking[aux_ref]=1
+							pass
+					total_hits+=1
 				except KeyError:
-					score=0.00
-					result=['',0.00,0.00,0.00]
-					while i<10:  ## we are printing only top scores
-						if score>ranking_table[i][3] :
-							break
-						if result[0]=='':
-							result=ranking_table[i]
-						else:
-							result[0]+=", "+ranking_table[i][0]
-							
-						score=ranking_table[i][3]
-						i+=1
 					pass
-
-				if verbose:
-					print str(FASTA_FILE)+"\t"+str(result)+snps
-				else:
-					print str(FASTA_FILE)+"\t"+str(result[0])+"\t"+str(result[3])+snps
-					
-			else:
-				print str(FASTA_FILE)
-				while i<5:
-				#while i<len(ranking_table):
-					if verbose:
-						try:
-							print str(ranking_table[i])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
-						except KeyError:
-							print str(ranking_table[i])
-							pass
-					else:
-						try:
-							print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
-						except KeyError:
-							print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])
-							pass
-					i+=1
-					
-		except IndexError:
-			print str(FASTA_FILE)+" ERROR: no result, check input file"
-			#exit(1)
+			if verbose:
+				print "Creating score table..."
+		        max_haplogroup_score_table=ast.literal_eval(TEST_content[1])
+		
+			ranking_table=[]
+			for haplogroup in result_haplogroup_ranking.keys():
+				ranking_table.append([haplogroup,float(result_haplogroup_ranking[haplogroup])/float(max_haplogroup_score_table[haplogroup]),float(result_haplogroup_ranking[haplogroup])/float(total_hits),((float(result_haplogroup_ranking[haplogroup])/float(max_haplogroup_score_table[haplogroup]))+(float(result_haplogroup_ranking[haplogroup])/float(total_hits)))/2])
+			ranking_table.sort(key=itemgetter(3),reverse=True)
+		
+			i=0
+			score=0.00
+			result=['',0.00,0.00,0.00]
+			try:
+				if not PRINT_RANKING:
+					snps=''
+					try:
+						while i<10:  ## we are printing only top scores
+							if score>ranking_table[i][3] :
+								break
+							if result[0]=='':
+								result=ranking_table[i]
+								snps="\t["+str(haplogroup_snp_dict[ranking_table[i][0]])
+							else:
+								result[0]+=", "+ranking_table[i][0]
+								snps+=', '+str(haplogroup_snp_dict[ranking_table[i][0]])
+								
+							score=ranking_table[i][3]
+							i+=1
+						snps+=']'
+					except KeyError:
+						score=0.00
+						result=['',0.00,0.00,0.00]
+						while i<10:  ## we are printing only top scores
+							if score>ranking_table[i][3] :
+								break
+							if result[0]=='':
+								result=ranking_table[i]
+							else:
+								result[0]+=", "+ranking_table[i][0]
+								
+							score=ranking_table[i][3]
+							i+=1
+						pass
 	
+					if verbose:
+						if IS_FASTA_INPUT:
+							print array_sample[0]+"\t"+str(result)+snps
+						else:
+							print str(FASTA_FILE)+"\t"+str(result)+snps
+					else:
+						if IS_FASTA_INPUT:
+							print array_sample[0]+"\t"+str(result[0])+"\t"+str(result[3])+snps
+						else:	
+							print str(FASTA_FILE)+"\t"+str(result[0])+"\t"+str(result[3])+snps
+						
+				else:
+					if IS_FASTA_INPUT:
+						print ""
+						print array_sample[0]
+					else:
+						print str(FASTA_FILE)
+					while i<5:
+					#while i<len(ranking_table):
+						if verbose:
+							try:
+								print str(ranking_table[i])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
+							except KeyError:
+								print str(ranking_table[i])
+								pass
+						else:
+							try:
+								print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]])
+							except KeyError:
+								print str(ranking_table[i][0])+"\t"+str(ranking_table[i][3])
+								pass
+						i+=1
+						
+			except IndexError:
+				print str(FASTA_FILE)+" ERROR: no result, check input file"
+				#exit(1)
+			samples_seq.pop(0)
+			try:
+				array_sample.pop(0)
+			except:
+				pass
+		
 ##############
 if __name__ == "__main__":
 	main()
