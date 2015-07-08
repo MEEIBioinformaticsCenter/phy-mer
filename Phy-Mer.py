@@ -52,7 +52,7 @@ IUPAC_ambiguity_dic['B']=['C','G','T']
 #IUPAC_ambiguity_dic['N']=['A','C','G','T']  ##You should include this one only in case that you do NOT use N to fill up non-sequenced regions.
 
 #### FUNCTIONS
-# convert a string in a array of strings using all posibilities for IUPAC
+# convert a string into an array of strings using all posibilities for IUPAC
 def decompress_IUPAC_kmer(kmer):
 	global IUPAC_ambiguity_dic
 	result_array=[kmer]
