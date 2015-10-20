@@ -18,6 +18,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ####Citation:
+Daniel Navarro-Gomez, Jeremy Leipzig, Lishuang Shen, Marie Lott, Alphons P.M. Stassen, Douglas C. Wallace, Janey L. Wiggs, Marni J. Falk, Mannis van Oven, and Xiaowu Gai
+Phy-Mer: a novel alignment-free and reference-independent mitochondrial haplogroup classifier.
+
 Bioinformatics (2015) 31 (8): 1310-1312. doi: 10.1093/bioinformatics/btu825  -> http://bioinformatics.oxfordjournals.org/content/31/8/1310
 
 
