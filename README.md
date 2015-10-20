@@ -17,6 +17,11 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+####Citation:
+Bioinformatics (2015) 31 (8): 1310-1312. doi: 10.1093/bioinformatics/btu825  -> http://bioinformatics.oxfordjournals.org/content/31/8/1310
+
+
+
 ####1. Installation: 
 
 #####1.1. Installing dependences:
