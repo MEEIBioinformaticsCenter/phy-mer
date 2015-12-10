@@ -16,19 +16,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
-
-
-
-
 from __future__ import print_function
-import sys
-from operator import itemgetter
+
 import ast
-import os
-import pysam
 import getopt
+from operator import itemgetter
+import pysam
+import sys
+
 from Bio import SeqIO, Seq, SeqRecord
 
 #### GLOBAL VARS:
@@ -37,23 +32,25 @@ REF_INDEX_ARRAY=''
 PRINT_RANKING=False
 min_kmer_repeats_bam=10
 
+IUPAC_ambiguity_dic={
+    'U':['T'],
+    'M':['A','C'],
+    'R':['A','G'],
+    'W':['A','T'],
+    'S':['C','G'],
+    'Y':['C','T'],
+    'K':['G','T'],
+    'V':['A','C','G'],
+    'H':['A','C','T'],
+    'D':['A','G','T'],
+    'B':['C','G','T'],
+    # Uncomment the following line if you do NOT use N to fill up non-sequenced regions.
+    # 'N':['A','C','G','T'],
+}
 
-IUPAC_ambiguity_dic={}
-IUPAC_ambiguity_dic['U']=['T']
-IUPAC_ambiguity_dic['M']=['A','C']
-IUPAC_ambiguity_dic['R']=['A','G']
-IUPAC_ambiguity_dic['W']=['A','T']
-IUPAC_ambiguity_dic['S']=['C','G']
-IUPAC_ambiguity_dic['Y']=['C','T']
-IUPAC_ambiguity_dic['K']=['G','T']
-IUPAC_ambiguity_dic['V']=['A','C','G']
-IUPAC_ambiguity_dic['H']=['A','C','T']
-IUPAC_ambiguity_dic['D']=['A','G','T']
-IUPAC_ambiguity_dic['B']=['C','G','T']
-#IUPAC_ambiguity_dic['N']=['A','C','G','T']  ##You should include this one only in case that you do NOT use N to fill up non-sequenced regions.
 
 #### FUNCTIONS
-# convert a string into an array of strings using all posibilities for IUPAC
+# Convert a string into an array of strings using all possibilities for IUPAC
 def decompress_IUPAC_kmer(kmer):
     global IUPAC_ambiguity_dic
     result_array=[kmer]
@@ -78,7 +75,7 @@ def decompress_IUPAC_kmer(kmer):
     return(result_array)
 
 
-# Converting a fasta sequence (string) to a dictionary (hash table) of k-mers
+# Converting a FASTA sequence (string) to a dictionary (hash table) of k-mers
 def convert_to_k_mer_hash(array_seq,min_repeats=1):
     global IUPAC_ambiguity_dic
     global K_MER_SIZE
@@ -103,8 +100,6 @@ def convert_to_k_mer_hash(array_seq,min_repeats=1):
                         return_k_mer[aux_kmer]+=1
                     except KeyError:
                         return_k_mer[aux_kmer]=1
-            ##
-
             else:
                 try:
                     return_k_mer[kmer]+=1
@@ -118,6 +113,7 @@ def convert_to_k_mer_hash(array_seq,min_repeats=1):
             return_k_mer_2[i]=True
     return return_k_mer_2
 
+
 # Reading variables from file hash (by lines)'s line
 def read_var_from_file_line(file_name,line):
     global REF_INDEX_ARRAY
@@ -128,7 +124,7 @@ def read_var_from_file_line(file_name,line):
     return to_return
 
 
-# Generator to convert BAM files into Biopython SeqRecords.
+# Generator to convert BAM files into BioPython SeqRecords.
 def bam_to_rec(in_file):
     MT_names=['M','MT','chrM','chrMT','chrMt','Mt','ChrM','ChrMT','ChrMt','CHRM','CHRMT','CHRMt']
     bam_file = pysam.Samfile(in_file, "rb")
@@ -148,16 +144,17 @@ def bam_to_rec(in_file):
         rec = SeqRecord.SeqRecord(seq, read.qname, "", "")
         yield rec
 
+
 # Reads a snp_def_file in memory to annotate results
 def read_snp_def_file(csv_file):
     haplogroup_input={}
     for rline in open(csv_file,'r').readlines():
-        rline_splited=rline.replace('\n','').split(',')
-        if rline_splited[0]!='Haplogroup':
-            haplogroup_input[rline_splited[0]]=[]
-            for variant in rline_splited:
-                if (variant!=rline_splited[0] and variant!=""):
-                    haplogroup_input[rline_splited[0]].append(variant)
+        rline_split=rline.replace('\n','').split(',')
+        if rline_split[0]!='Haplogroup':
+            haplogroup_input[rline_split[0]]=[]
+            for variant in rline_split:
+                if (variant!=rline_split[0] and variant!=""):
+                    haplogroup_input[rline_split[0]].append(variant)
     return(haplogroup_input)
 
 
@@ -174,7 +171,7 @@ def print_help():
     print("                             based in file.csv (Build_16_-_rCRS-based_haplogroup_motifs.csv")
     print("                             in resources folder).")
     print("  --min-DoC=10               Only apply to BAM inputs. Minimal number of occurences of a K-mer")
-    print(" 			    to be consider.")
+    print("                             to be consider.")
     print("")
 
 
@@ -188,7 +185,7 @@ def main():
         opts, args = getopt.getopt(sys.argv[1:], '', ['verbose','print-ranking','help','def-snps=','min-DoC='])
     except getopt.GetoptError:
         print("ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+str(min_kmer_repeats_bam)+"] Library.txt INPUT_1 [INPUT_2 ... INPUT_X]")
-        print("Use --help for more informtion.")
+        print("Use --help for more information.")
         exit(1)
 
     for o,p in opts:
@@ -208,7 +205,7 @@ def main():
     global K_MER_SIZE
     if len(args)<2:
         print("ERROR: Usage: "+str(sys.argv[0])+" [--verbose] [--print-ranking] [--def-snps=haplogroup_def_motifs.csv] [--min-DoC="+str(min_kmer_repeats_bam)+"] DataBase.txt INPUT_1 [INPUT_2 ... INPUT_X]")
-        print("Use --help for more informtion.")
+        print("Use --help for more information.")
         exit(1)
     if verbose and DEF_SNP!='':
                 print("Opening haplogroup defining snps...")
@@ -227,7 +224,6 @@ def main():
     if verbose:
         print("DONE")
 
-
     REF_INDEX_ARRAY=ast.literal_eval(TEST_content[2])
 
     k_mer_hash=ast.literal_eval(TEST_content[0])
@@ -236,8 +232,6 @@ def main():
         print("K-mer="+str(K_MER_SIZE))
 
     for FASTA_FILE in FASTA_FILES:
-
-
         if verbose:
             print("Opening input file and loading it in memory...")
         try:
@@ -256,7 +250,7 @@ def main():
             if verbose:
                 print("Detected FASTA format")
             try:
-                for record in SeqIO.parse(handle, "fasta") :
+                for record in SeqIO.parse(handle, "fasta"):
                     array_sample.append(record.id)
                     array_seq.append(list(record.seq.upper()))
                 handle.close()
@@ -275,10 +269,9 @@ def main():
                 print(FASTA_FILE+" doesn't exist...")
                 exit(1)
             array_seq=[]
-            for record in SeqIO.parse(handle, "fastq") :
+            for record in SeqIO.parse(handle, "fastq"):
                 array_seq.append(list(record.seq))
             handle.close()
-
 
         elif FASTA_FILE.split('.')[-1].lower()=="bam":
             if verbose:
@@ -293,16 +286,13 @@ def main():
                 exit(1)
 
         else:
-            print("ERROR: Input file not compatible: fasta (fasta, fa or txt), fastq or bam")
+            print("ERROR: Input file not compatible: FASTA (fasta, fa or txt), FASTQ or BAM")
             exit(1)
-
 
         if len(array_seq)==0:
             print("ERROR: empty input")
             exit(1)
 
-        #print array_seq
-        #exit(0)
         if IS_FASTA_INPUT:
             samples_seq=array_seq
         else:
@@ -396,7 +386,7 @@ def main():
                     else:
                         print(str(FASTA_FILE))
                     while i<5:
-                    #while i<len(ranking_table):
+                        #while i<len(ranking_table):
                         if verbose:
                             try:
                                 print(str(ranking_table[i])+"\t"+str(haplogroup_snp_dict[ranking_table[i][0]]))
@@ -420,8 +410,7 @@ def main():
             except:
                 pass
 
+
 ##############
 if __name__ == "__main__":
     main()
-
-
