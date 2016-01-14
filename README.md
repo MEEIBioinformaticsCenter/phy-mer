@@ -31,7 +31,7 @@ Bioinformatics (2015) 31 (8): 1310-1312. doi: 10.1093/bioinformatics/btu825  -> 
 
 Download and install the dependencies. Installation instructions for each dependency are provided on its project website with the URL provided.
 
-- Python (2.7.3 tested and 3.0 thanks to @fmerinocasallo) -> https://www.python.org/downloads/
+- Python (2.7.3 and 3.0 tested -v3.0 thanks to @fmerinocasallo-) -> https://www.python.org/downloads/
 
 - Pysam (0.7.4 tested) -> https://code.google.com/p/pysam/ 
 
