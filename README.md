@@ -38,9 +38,9 @@ Download and install the dependencies. Installation instructions for each depend
 - BioPython (1.58 tested) -> http://biopython.org/wiki/Download
 
 #####1.2. Download Phy-Mer package, uncompress it and uncompress the Library:
-Download last version of Phy-Mer and utilities following this link (https://github.com/danielnavarrogomez/phy-mer/archive/master.zip), uncompress it, open "phy-mer-master" folder and uncompress "PhyloTree_b16_k12.txt.gz".
+Download last version of Phy-Mer and utilities following this link (https://github.com/MEEIBioinformaticsCenter/phy-mer/archive/master.zip), uncompress it, open "phy-mer-master" folder and uncompress "PhyloTree_b16_k12.txt.gz".
 	
-	wget https://github.com/danielnavarrogomez/phy-mer/archive/master.zip
+	wget https://github.com/MEEIBioinformaticsCenter/phy-mer/archive/master.zip 
 	unzip master.zip
 	cd phy-mer-master
 	gzip -d PhyloTree_b16_k12.txt.gz
